@@ -1,5 +1,6 @@
 var EventEmitter = require('events');
 var utils = require('../utils');
+var mathjs = require('mathjs');
 
 class Character extends EventEmitter {
     constructor(name){
@@ -37,15 +38,14 @@ class Character extends EventEmitter {
         return this.totalExpToNext - this.accumulatedExp; 
     }
     get dps() {
-        return ((Math.log(this.level^1.37,1.2))+3);
+        return mathjs.log(mathjs.pow(this.level,1.37),1.2)+3;
+
     }
 
     
     attack(monster) {
         var characterDamage = {};
-        console.log(this.dps);
         var baseAccuracy = (this.acc - utils.getRandom(0,5)) * (this.dps - this.powerScale);
-        console.log('baseAccuracy:',baseAccuracy);
         var baseStrength = (this.str - utils.getRandom(0,5)) * (this.dps - this.powerScale);
         var baseMagic = (this.mgk - utils.getRandom(0,5)) * (this.dps - this.powerScale);
         var critRoll = Math.random();
@@ -53,7 +53,7 @@ class Character extends EventEmitter {
             characterDamage.accuracy = baseAccuracy * this.critMult;
             characterDamage.strength = baseStrength * this.critMult;
             characterDamage.magic = baseMagic * this.critMult;
-            console.log('characterDamageCrit:', characterDamage.accuracy);
+            console.log('crit');
         } else {
             characterDamage.accuracy = baseAccuracy;
             characterDamage.strength = baseStrength;
