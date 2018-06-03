@@ -8,6 +8,7 @@ class Mage extends Character {
         this.mgk = 30;
         this.acc = 20;
         this.armor = armorTypes.lightArmor();
+        this.class = "Mage";
     }
 }
 

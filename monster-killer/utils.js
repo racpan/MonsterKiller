@@ -30,6 +30,8 @@ function nameGenerator(armorIndex, nameList) {
     return nameList[armorIndex] + ' ' + name.join('');
 }
 
+
+
 module.exports = {
     getRandom,
     chooseItemFromArray,

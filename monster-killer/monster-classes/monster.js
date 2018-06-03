@@ -14,10 +14,11 @@ class Monster extends EventEmitter {
         this.hasPotion = this.getPotion();
         this.maxHealth = ((level ^ 2) * 8) + 230;
         this.accumulatedDamage = 0;
+        this.message;
     }
     attack(character) {
         //emit damageCharacter event
-        character.emit('damageCharacter', this.monsterDamage);
+        return character.emit('damageCharacter', this.monsterDamage);
     }
     get monsterName() {
         this.name = nameChoice.nameChoice(this);

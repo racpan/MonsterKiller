@@ -19,6 +19,7 @@ class Character extends EventEmitter {
         this.armorType;
         this.maxHealth = ((this.level^2.2) + 10);;
         this.totalExpToNext; 
+        this.message;
     }
 
     get powerScale() {
@@ -59,7 +60,7 @@ class Character extends EventEmitter {
             characterDamage.strength = baseStrength;
             characterDamage.magic = baseMagic;
         }
-        monster.emit('damageMonster', this, characterDamage);
+        return monster.emit('damageMonster', this, characterDamage);
     }
     run() {
 

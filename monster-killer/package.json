@@ -18,6 +18,10 @@
   "homepage": "https://github.com/racpan/MonsterKiller#readme",
   "devDependencies": {},
   "dependencies": {
-    "mathjs": "^4.0.1"
+    "json-override": "^0.2.0",
+    "lodash": "^4.17.10",
+    "mathjs": "^4.0.1",
+    "vorpal": "^1.12.0",
+    "vorpal-as-default": "0.0.2"
   }
 }

@@ -42,9 +42,12 @@ function newMonster(level) {
             break;
         }
         monster.accumulatedDamage = monster.accumulatedDamage + appliedDamage;
-        console.log(`${character.name} attacks ${monster.name} for ${appliedDamage}`);
+        var message = (`${character.name} attacks ${monster.name} for ${appliedDamage}`);
         if (monster.health <= 0) {
             monster.emit('monsterDies', character);
+            monster = null;
+        } else {
+            monster.message = message;
         }
         
         /*
@@ -58,14 +61,17 @@ function newMonster(level) {
     });
 
     monster.on('monsterDies', function(character) {
+        var message = `You've killed ${monster.name} for ${monster.experienceGranted} experience`;
         if (character.expToNext <= monster.experienceGranted) {
             character.emit('levelUp');
         } else {
             character.accumulatedExp = character.accumulatedExp + monster.experienceGranted;
         }
         if (monster.hasPotion) {
-            console.log(`You got a level ${monster.level} potion`);
+            monster.message = (message + `\n You also got a level ${monster.level} potion`);
             //add potion to inventory same level as monster
+        } else {
+            monster.message = message;
         }
     });
     return monster;

@@ -8,6 +8,7 @@ class Archer extends Character {
         this.mgk = 10;
         this.acc = 30;
         this.armor = armorTypes.mediumArmor();
+        this.class = "Archer";
     }
 }
 

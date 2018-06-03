@@ -8,6 +8,7 @@ class Warrior extends Character {
         this.mgk = 20;
         this.acc = 10;
         this.armor = armorTypes.heavyArmor();
+        this.class = "Warrior";
     }
 }
 

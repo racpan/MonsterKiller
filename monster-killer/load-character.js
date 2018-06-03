@@ -1,26 +1,19 @@
 var damageTypes = require('./damage-types');
-var CharConstructor;
-var store = require('./files/utils')
+var CharConstructor = require('./character-classes/character');
+var store = require('./files/utils');
+var lodash = require('lodash');
 /*
 player creates character and inputs name and class
 add listeners to the character
 select class based on player input
 export the whole function
 */
-function newCharacter(name, characterClass) {
-    switch(characterClass) {
-        case "Mage":
-            CharConstructor = require("./character-classes/mage");
-        break;
-        case "Archer":
-            CharConstructor = require("./character-classes/archer");
-        break;
-        case "Warrior":
-            CharConstructor = require("./character-classes/warrior");
-        break;
-    }
+function loadCharacter(character) {
     
-    var player1 = new CharConstructor(name);
+    var player1 = new CharConstructor(character.name);
+    // console.log(player1);
+    // console.log(character);
+    lodash.assignIn(player1, character);
     
     player1.on('damageCharacter', function(monsterDamage) {
         // character armor type 
@@ -56,24 +49,14 @@ function newCharacter(name, characterClass) {
     player1.on('characterDies', function(damageAmount) {
         var message = "You dead!";
         player1.accumulatedExp = 0;
-        store.saveCharacter(player1, name);
         player1.message = `${damageAmount} \n ${message}`;
-        player1 = null;
     });
-
-    store.fetchCharacter(name);
-    store.saveCharacter(player1, name);
-
+    store.saveCharacter(player1, player1.name);
     return player1;
 }
 
-module.exports = newCharacter;
+module.exports = loadCharacter;
 
 // Character takes Damage via "DamageCharacter" event
 // Damage Taken = (MonsterDmg * armorMultiplier)/toughness
 // Character Dies - Progress to next level resets 
-/*
-    TODO:
-    - Make potion inventory on character
-    - Make sure character levels up and stuff the right way 
-*/
